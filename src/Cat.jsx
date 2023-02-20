@@ -15,15 +15,31 @@ const Cat = ({ onYes, onNo }) => {
       });
   }, []);
 
+  const onAnswer = (yes) => {
+    if (yes === true) {
+      onYes(src);
+    } else {
+      onNo();
+    }
+
+    setLoading(true);
+
+    fetch(URL)
+      .then((res) => res.json())
+      .then((cats) => cats[0])
+      .then((cat) => setSrc(cat.url))
+      .then(() => setLoading(false));
+  };
+
   if (loading === true) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   return (
     <div>
       <img src={src} />
-      <button onClick={() => onYes(src)}>Yes</button>
-      <button onClick={onNo}>No</button>
+      <button onClick={() => onAnswer(true)}>Yes</button>
+      <button onClick={() => onAnswer(false)}>No</button>
     </div>
   );
 };

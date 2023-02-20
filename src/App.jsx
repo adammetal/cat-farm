@@ -14,7 +14,7 @@ function App() {
         }}
         onNo={() => {}}
       />
-      <div>
+      <div className="grid">
         {cats.map((src) => (
           <img key={src} src={src} />
         ))}

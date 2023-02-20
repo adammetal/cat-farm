@@ -13,7 +13,7 @@ function App() {
           setCats((prev) => [...prev, src]);
         }}
       />
-      <div>
+      <div className="grid">
         {cats.map((src) => (
           <img key={src} src={src} />
         ))}

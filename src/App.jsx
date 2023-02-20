@@ -12,6 +12,7 @@ function App() {
         onYes={(src) => {
           setCats((prev) => [...prev, src]);
         }}
+        onNo={() => {}}
       />
       <div>
         {cats.map((src) => (

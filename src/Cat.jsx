@@ -7,12 +7,20 @@ const Cat = ({ onYes, onNo }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let isValid = true;
+
     fetch(URL)
       .then((res) => res.json())
       .then((res) => {
-        setLoading(false);
-        setSrc(res[0].url);
+        if (isValid) {
+          setLoading(false);
+          setSrc(res[0].url);
+        }
       });
+
+    return () => {
+      isValid = false;
+    };
   }, []);
 
   const onAnswer = (yes) => {

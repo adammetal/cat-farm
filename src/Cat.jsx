@@ -1,18 +1,32 @@
 import { useState, useEffect } from "react";
+import Loader from "./Loader";
 
 const URL = "https://api.thecatapi.com/v1/images/search";
+
+const fetchCat = (signal) =>
+  fetch(URL, { signal })
+    .then((res) => res.json())
+    .then((res) => res[0].url);
 
 const Cat = ({ onYes, onNo }) => {
   const [src, setSrc] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(URL)
-      .then((res) => res.json())
-      .then((res) => {
+    const controller = new AbortController();
+
+    fetchCat(controller.signal)
+      .then((url) => {
         setLoading(false);
-        setSrc(res[0].url);
+        setSrc(url);
+      })
+      .catch((e) => {
+        console.log(e);
       });
+
+    return () => {
+      controller.abort();
+    };
   }, []);
 
   const onAnswer = (yes) => {
@@ -24,15 +38,13 @@ const Cat = ({ onYes, onNo }) => {
 
     setLoading(true);
 
-    fetch(URL)
-      .then((res) => res.json())
-      .then((cats) => cats[0])
-      .then((cat) => setSrc(cat.url))
+    fetchCat(null)
+      .then((url) => setSrc(url))
       .then(() => setLoading(false));
   };
 
   if (loading === true) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return (

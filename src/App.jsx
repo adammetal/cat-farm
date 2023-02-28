@@ -5,6 +5,8 @@ import "./App.css";
 function App() {
   const [cats, setCats] = useState([]);
 
+  const resetCats = () => setCats([]);
+
   return (
     <div className="App">
       <h1>Welcome to cat farm!!!</h1>
@@ -15,7 +17,7 @@ function App() {
         onNo={() => {}}
       />
       <div>
-        <button onClick={() => setCats([])}>Reset</button>
+        <button onClick={resetCats}>Reset</button>
       </div>
       <div className="grid">
         {cats.map((src) => (

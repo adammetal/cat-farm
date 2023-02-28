@@ -14,6 +14,9 @@ function App() {
         }}
         onNo={() => {}}
       />
+      <div>
+        <button onClick={() => setCats([])}>Reset</button>
+      </div>
       <div className="grid">
         {cats.map((src) => (
           <img key={src} src={src} />
